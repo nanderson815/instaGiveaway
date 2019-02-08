@@ -3,10 +3,11 @@ const $ = require('cheerio');
 const url = 'https://www.instagram.com/p/Bs1aNd1AMNf/';
 
 var exists = true;
+var comments = [];
+
 
 async function rungProg() {
     console.log('running');
-    var comments = [];
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
