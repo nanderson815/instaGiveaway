@@ -1,5 +1,8 @@
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
+var express = require('express')
+var app = express()
+
 const url = 'https://www.instagram.com/p/Bs1aNd1AMNf/';
 
 var exists = true;
@@ -16,7 +19,7 @@ async function rungProg() {
         console.log(exists);
         await getComments(page);
     }
-    
+
     await printComments(page, browser, comments);
     await console.log(comments.length);
     await browser.close();
