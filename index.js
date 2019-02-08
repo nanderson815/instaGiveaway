@@ -28,7 +28,7 @@ async function getComments(page) {
     if (await page.$('button.Z4IfV') !== null) {
         page.click('button.Z4IfV');
         await console.log("clicked");
-        await page.waitFor(500);
+        await page.waitFor(150);
     } else {
         exists = false;
         await console.log('not found');
@@ -42,22 +42,3 @@ async function printComments(page, browser, comments) {
         comments.push($(this).text());
     });
 }
-
-
-
-
-
-
-// async function getComments(page) {
-//     try {
-//         await Promise.all([
-//             await page.waitForSelector('button.Z4IfV'),
-//             page.click('button.Z4IfV'),
-//             console.log("clicked"),
-//             page.waitFor(500),
-//         ]);
-//     } catch (error) {
-//         exists = false;
-//         console.log("The element didn't appear.");
-//     }
-// };
