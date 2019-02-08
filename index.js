@@ -1,7 +1,8 @@
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-const url = 'https://www.instagram.com/p/BtY0Bsrg1mS/';
+const url = 'https://www.instagram.com/p/Bs1aNd1AMNf/';
 
+var exists = true;
 
 async function rungProg(){
     console.log('running');
@@ -10,9 +11,13 @@ async function rungProg(){
     const page = await browser.newPage();
     await page.goto(url);
 
-    await getComments(page);
+    while (exists === true){
+        console.log(exists);
+        await getComments(page);
+    }
     await printComments(page, browser, comments);
     await console.log(comments.length);
+    await browser.close();    
 };
 
 rungProg();
@@ -27,7 +32,8 @@ async function getComments(page) {
             page.waitFor(500),
         ]);
     } catch (error) {
-        console.log("The element didn't appear.")
+        exists = false;
+        console.log("The element didn't appear.");
     }
 };
 
@@ -37,5 +43,4 @@ async function printComments(page, browser, comments) {
     await $('h3 > a', html).each(function () {
         comments.push($(this).text());
     });
-    await browser.close();
 }
