@@ -16,6 +16,7 @@ async function rungProg() {
         console.log(exists);
         await getComments(page);
     }
+    
     await printComments(page, browser, comments);
     await console.log(comments.length);
     await browser.close();
@@ -23,9 +24,8 @@ async function rungProg() {
 
 rungProg();
 
-
+// If the "load more" button exists, it will be pressed until all comments have loaded. 
 async function getComments(page) {
-
     if (await page.$('button.Z4IfV') !== null) {
         page.click('button.Z4IfV');
         await console.log("clicked");
@@ -36,7 +36,7 @@ async function getComments(page) {
     }
 };
 
-
+// Stores the comments to the comments array by grabbing internal text.
 async function printComments(page, browser, comments) {
     const html = await page.content()
     await $('h3 > a', html).each(function () {
