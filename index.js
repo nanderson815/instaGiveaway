@@ -3,7 +3,7 @@ const $ = require('cheerio');
 var express = require('express')
 var app = express()
 
-const url = 'https://www.instagram.com/p/Bs1aNd1AMNf/';
+const url = 'https://www.instagram.com/p/BtY0Bsrg1mS/';
 
 var exists = true;
 var comments = [];
@@ -21,6 +21,7 @@ async function rungProg() {
     }
 
     await printComments(page, browser, comments);
+    await console.log(comments);
     await console.log(comments.length);
     await browser.close();
 };
@@ -32,7 +33,7 @@ async function getComments(page) {
     if (await page.$('button.Z4IfV') !== null) {
         page.click('button.Z4IfV');
         await console.log("clicked");
-        await page.waitFor(150);
+        await page.waitFor(250);
     } else {
         exists = false;
         await console.log('not found');
