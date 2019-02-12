@@ -10,30 +10,30 @@ app.listen(3000, function(){
     console.log('Server Started on Port 3000...')
 })
 
-
+// Middleware to parse the data from the front end form.
 app.use(bodyParser.urlencoded({extended: true}));
-
 app.use(bodyParser.json());
 
 // Set Static Path
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Function to grab URL from front end, run the scraping program.
 app.post('/submit-url', function (req, res) {
     var URL = req.body.url;
     console.log(URL);
     rungProg(URL);
 });
 
-
+// Push the HTML to root on load
 app.get('/', function(req, res){
     res.sendFile(path.join(__dirname + 'public/index.html'))
 });
 
-
+// Global vars :(
 var exists = true;
 var comments = [];
 
-
+// Funciton to scrape comments
 async function rungProg(url) {
     console.log('running');
     const browser = await puppeteer.launch();
