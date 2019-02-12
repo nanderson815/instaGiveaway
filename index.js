@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const $ = require('cheerio');
 var express = require('express');
 var path = require('path');
+var bodyParser = require('body-parser');
 
 var app = express()
 
@@ -10,12 +11,18 @@ app.listen(3000, function(){
 })
 
 
+app.use(bodyParser.urlencoded({extended: true}));
 
+app.use(bodyParser.json());
 
 // Set Static Path
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+app.post('/submit-url', function (req, res) {
+    var URL = req.body.url;
+    console.log(URL);
+    rungProg(URL);
+});
 
 
 app.get('/', function(req, res){
@@ -23,18 +30,11 @@ app.get('/', function(req, res){
 });
 
 
-
-
-
-
-
-const url = 'https://www.instagram.com/p/Bs1aNd1AMNf/';
-
 var exists = true;
 var comments = [];
 
 
-async function rungProg() {
+async function rungProg(url) {
     console.log('running');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
