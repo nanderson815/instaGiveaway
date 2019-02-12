@@ -50,14 +50,12 @@ async function rungProg(url) {
     await browser.close();
 };
 
-
+// Send comments to front end
 function sendComments(){
     app.get('/return-comments', function(req,res){
         res.send(comments);
     })
 }
-
-// rungProg();
 
 // If the "load more" button exists, it will be pressed until all comments have loaded. 
 async function getComments(page) {
