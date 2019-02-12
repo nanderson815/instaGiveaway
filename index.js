@@ -46,8 +46,16 @@ async function rungProg(url) {
     }
     await console.log(comments);
     await console.log(comments.length);
+    sendComments();
     await browser.close();
 };
+
+
+function sendComments(){
+    app.get('/return-comments', function(req,res){
+        res.send(comments);
+    })
+}
 
 // rungProg();
 
