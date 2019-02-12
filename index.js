@@ -1,7 +1,32 @@
 const puppeteer = require('puppeteer');
 const $ = require('cheerio');
-var express = require('express')
+var express = require('express');
+var path = require('path');
+
 var app = express()
+
+app.listen(3000, function(){
+    console.log('Server Started on Port 3000...')
+})
+
+
+
+
+// Set Static Path
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+
+app.get('/', function(req, res){
+    res.sendFile(path.join(__dirname + 'public/index.html'))
+});
+
+
+
+
+
+
 
 const url = 'https://www.instagram.com/p/Bs1aNd1AMNf/';
 
@@ -24,7 +49,7 @@ async function rungProg() {
     await browser.close();
 };
 
-rungProg();
+// rungProg();
 
 // If the "load more" button exists, it will be pressed until all comments have loaded. 
 async function getComments(page) {

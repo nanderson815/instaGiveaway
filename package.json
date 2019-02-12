@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/nanderson815/instaGiveaway#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.16.4",
     "puppeteer": "^1.12.2",
