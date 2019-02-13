@@ -50,7 +50,12 @@ async function rungProg(url) {
 };
 
 // Send comments to front end
-app.get('/return-comments', function (req, res) {
+app.get('/comments', function (req, res) {
+    res.sendFile(path.join(__dirname + '/public/comments.html'));
+    // res.send(comments);
+})
+
+app.get('/send-comments', function(req, res){
     res.send(comments);
 })
 

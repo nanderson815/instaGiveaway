@@ -53,38 +53,8 @@
 
     <div class="container">
         <div class="row">
-            <div class="col s12">
-                <h3>Welcome to Insta-picker!</h3>
-                <h4>Instagram contests made easy.</h4>
-                <ol>
-                    <li>Set your profile to public.</li>
-                    <li>Copy and paste the URL of the Giveaway post into our tool.</li>
-                    <li>We do the rest! Your winner will automatically be picked from the comments!</li>
-                </ol>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col s12 m6">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <span class="card-title">Step 1</span>
-                        <p>Enter the URL of your instagram post below. Remeber to set your page to public so that we can
-                            access the comments!</p>
-                    </div>
-                    <div class="card-action">
-                        <form method="POST" action="/submit-url">
-                            <label for="URL">URL</label>
-                            <input id="URL" type="text" name="url">
-                            <button id="submitBtn" class="btn waves-effect waves-light" type="submit"
-                                name="action">Submit
-                                <i class="material-icons right">send</i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <h1>Test</h1>
+            <button id="getComments">Test</button>
     </div>
 
 
@@ -100,7 +70,16 @@
         $('.fixed-action-btn').floatingActionButton();
     });
 
-    $('#submitBtn').click(function () {
+    $('#submitBtn').click(function(){
         console.log("Yay.");
     });
+
+    function getComments(){
+        $.get("/send-comments", (data) =>{
+            console.log(data);
+        });
+    }
+
+    $('#getComments').click(getComments);
+
 </script>
