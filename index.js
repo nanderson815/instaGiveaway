@@ -6,12 +6,12 @@ var bodyParser = require('body-parser');
 
 var app = express()
 
-app.listen(3000, function(){
+app.listen(3000, function () {
     console.log('Server Started on Port 3000...')
 })
 
 // Middleware to parse the data from the front end form.
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Set Static Path
@@ -25,7 +25,7 @@ app.post('/submit-url', function (req, res) {
 });
 
 // Push the HTML to root on load
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + 'public/index.html'))
 });
 
@@ -44,31 +44,28 @@ async function rungProg(url) {
         console.log(exists);
         await getComments(page);
     }
-    await console.log(comments);
-    await console.log(comments.length);
-    sendComments();
+    console.log(comments);
+    console.log(comments.length);
     await browser.close();
 };
 
 // Send comments to front end
-function sendComments(){
-    app.get('/return-comments', function(req,res){
-        res.send(comments);
-    })
-}
+app.get('/return-comments', function (req, res) {
+    res.send(comments);
+})
 
 // If the "load more" button exists, it will be pressed until all comments have loaded. 
 async function getComments(page) {
     if (await page.$('button.Z4IfV') !== null) {
         await page.click('button.Z4IfV');
-        await console.log("clicked");
+        console.log("clicked");
         var wait = Math.floor(Math.random() * 1000) + 250;
         await page.waitFor(wait);
         comments = [];
         await printComments(page, comments);
     } else {
         exists = false;
-        await console.log('not found');
+        console.log('not found');
     }
 };
 
@@ -78,5 +75,9 @@ async function printComments(page, comments) {
     await $('h3 > a', html).each(function () {
         comments.push($(this).text());
     });
-    await console.log(comments.length);
+    console.log(comments.length);
 }
+
+// console.log(comments);
+
+module.exports = comments;
