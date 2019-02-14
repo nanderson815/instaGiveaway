@@ -57,6 +57,7 @@ app.get('/comments', function (req, res) {
 
 app.get('/send-comments', function(req, res){
     res.send(comments);
+    res.redirect('/public/comments.html');
 })
 
 // If the "load more" button exists, it will be pressed until all comments have loaded. 
