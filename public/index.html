@@ -106,10 +106,11 @@
 
     function checkStatus() {
         $.get("/send-comments", (data) => {
-            console.log(data.loading);
+            console.log("Comments loaded: ",data.comments.length);
             getcomments(data);
         });
     }
+
 
     function getcomments(loaded) {
         if (loaded.loading) {
