@@ -3,7 +3,6 @@ const $ = require('cheerio');
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-
 var app = express()
 
 app.listen(3000, function () {
@@ -14,6 +13,9 @@ app.listen(3000, function () {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+//-------------------------------------------------------------------------------------------------
+
+
 // Set Static Path
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -22,7 +24,6 @@ app.post('/submit-url', function (req, res) {
     var URL = req.body.url;
     console.log(URL);
     rungProg(URL);
-    res.redirect('/comments.html');
 });
 
 // Push the HTML to root on load
@@ -30,9 +31,22 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + 'public/index.html'))
 });
 
+// Send comments to front end
+app.get('/comments', function (req, res) {
+    res.sendFile(path.join(__dirname + '/public/comments.html'));
+    // res.send(comments);
+});
+
+app.get('/send-comments', function (req, res) {
+    res.send(comments);
+});
+
 // Global vars :(
 var exists = true;
 var comments = [];
+
+
+
 
 // Funciton to scrape comments
 async function rungProg(url) {
@@ -50,15 +64,6 @@ async function rungProg(url) {
     await browser.close();
 };
 
-// Send comments to front end
-app.get('/comments', function (req, res) {
-    res.sendFile(path.join(__dirname + '/public/comments.html'));
-    // res.send(comments);
-})
-
-app.get('/send-comments', function(req, res){
-    res.send(comments);
-})
 
 // If the "load more" button exists, it will be pressed until all comments have loaded. 
 async function getComments(page) {
@@ -75,6 +80,7 @@ async function getComments(page) {
     }
 };
 
+
 // Stores the comments to the comments array by grabbing internal text.
 async function printComments(page, comments) {
     const html = await page.content()
@@ -83,7 +89,3 @@ async function printComments(page, comments) {
     });
     console.log(comments.length);
 }
-
-// console.log(comments);
-
-module.exports = comments;
