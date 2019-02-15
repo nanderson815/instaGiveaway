@@ -101,6 +101,13 @@
     });
 
     $('#submitBtn').click(function () {
-        console.log("Yay.");
+        getComments();
     });
+
+    function getComments() {
+            $.get("/send-comments", (data) => {
+                console.log(data);
+            });
+        }
+
 </script>

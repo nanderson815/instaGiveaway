@@ -3,7 +3,7 @@ const $ = require('cheerio');
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
-var app = express()
+var app = express();
 
 app.listen(3000, function () {
     console.log('Server Started on Port 3000...')
@@ -38,13 +38,15 @@ app.get('/comments', function (req, res) {
 });
 
 app.get('/send-comments', function (req, res) {
-    res.send(comments);
+    // res.send(comments);
+    res.send({loading: exists, comments: comments});
 });
+
+
 
 // Global vars :(
 var exists = true;
 var comments = [];
-
 
 
 
@@ -65,6 +67,7 @@ async function rungProg(url) {
 };
 
 
+
 // If the "load more" button exists, it will be pressed until all comments have loaded. 
 async function getComments(page) {
     if (await page.$('button.Z4IfV') !== null) {
@@ -79,6 +82,7 @@ async function getComments(page) {
         console.log('not found');
     }
 };
+
 
 
 // Stores the comments to the comments array by grabbing internal text.
