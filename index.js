@@ -39,7 +39,7 @@ app.get('/comments', function (req, res) {
 
 app.get('/send-comments', function (req, res) {
     // res.send(comments);
-    res.send({loading: exists, comments: comments});
+    res.send({ loading: exists, comments: comments });
 });
 
 
@@ -89,7 +89,11 @@ async function getComments(page) {
 async function printComments(page, comments) {
     const html = await page.content()
     await $('h3 > a', html).each(function () {
-        comments.push($(this).text());
+        comment = {
+            username: $(this).text(),
+            link: $(this).attr("href")
+        }
+        comments.push(comment);
     });
     console.log(comments.length);
 }
