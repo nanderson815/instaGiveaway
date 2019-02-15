@@ -101,13 +101,26 @@
     });
 
     $('#submitBtn').click(function () {
-        getComments();
+        checkStatus();
     });
 
-    function getComments() {
-            $.get("/send-comments", (data) => {
-                console.log(data);
-            });
+    function checkStatus() {
+        $.get("/send-comments", (data) => {
+            console.log(data.loading);
+            getcomments(data);
+        });
+    }
+
+    function getcomments(loaded) {
+        if (loaded.loading) {
+            setTimeout(function () {
+                checkStatus();
+                console.log("loding");
+            }, 3000);
         }
+        else {
+            console.log(loaded.comments);
+        }
+    };
 
 </script>
