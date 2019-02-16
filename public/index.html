@@ -88,6 +88,60 @@
                 </div>
             </div>
         </div>
+
+        <div class="row hidden" id="loader">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                
+                    <div class="spinner-layer spinner-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                
+                    <div class="spinner-layer spinner-yellow">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                
+                    <div class="spinner-layer spinner-green">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+
         <div class="row">
             <table id="commentsTable" class="hidden">
                 <thead>
@@ -125,6 +179,7 @@
         });
         checkStatus();
         $("#submitCard").addClass("hidden");
+        $("#loader").removeClass("hidden");
     });
 
     function checkStatus() {
@@ -149,6 +204,7 @@
     };
 
     function appendComments(data) {
+        $("#loader").addClass("hidden");
         $("#commentsTable").removeClass("hidden");
         for (let i in data) {
             num = parseInt(i) + 1;
