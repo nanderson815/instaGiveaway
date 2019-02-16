@@ -37,7 +37,7 @@
     </nav>
 
     <!-- <ul class="sidenav" id="mobile-demo"> -->
-        <!-- <li><a href="sass.html">Sass</a></li>
+    <!-- <li><a href="sass.html">Sass</a></li>
         <li><a href="badges.html">Components</a></li>
         <li><a href="collapsible.html">Javascript</a></li>
         <li><a href="mobile.html">Mobile</a></li> -->
@@ -91,57 +91,72 @@
 
         <div class="row hidden center-align" id="loader">
             <h5 id="loadedComments"></h5>
-                <div class="preloader-wrapper big active">
-                    <div class="spinner-layer spinner-blue">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
                     </div>
-                
-                    <div class="spinner-layer spinner-red">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
                     </div>
-                
-                    <div class="spinner-layer spinner-yellow">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
                     </div>
-                
-                    <div class="spinner-layer spinner-green">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
+                </div>
+
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="winnerCard" class="row hidden">
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Pick a winner!</span>
+                        <p>Clicking the button below will randomly select a winner from the comments.</p>
+                        <div class="card-action">
+                            <p class="center-align">
+                                <button id="winnerbtn" class="btn waves-effect waves-light">Click Me!</button>
+                            </p>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-
 
         <div class="row">
             <table id="commentsTable" class="hidden">
@@ -171,16 +186,22 @@
         $('.fixed-action-btn').floatingActionButton();
     });
 
+    var comments = [];
+
     $('#submitBtn').click(function (event) {
         event.preventDefault();
         var URL = $("#URL").val().trim();
         console.log(URL);
-        $.post("/submit-url", {url: URL}, function(data){
+        $.post("/submit-url", { url: URL }, function (data) {
             $("#URL").val("");
         });
         checkStatus();
         $("#submitCard").addClass("hidden");
         $("#loader").removeClass("hidden");
+    });
+
+    $("#winnerbtn").click(function () {
+        pickWinner(comments);
     });
 
     function checkStatus() {
@@ -196,10 +217,10 @@
             setTimeout(function () {
                 checkStatus();
                 console.log("loding");
-            }, 3000);
+            }, 500);
         }
         else {
-            console.log(loaded.comments);
+            comments = loaded.comments;
             appendComments(loaded.comments);
         }
     };
@@ -207,6 +228,7 @@
     function appendComments(data) {
         $("#loader").addClass("hidden");
         $("#commentsTable").removeClass("hidden");
+        $('#winnerCard').removeClass("hidden");
         for (let i in data) {
             num = parseInt(i) + 1;
             let row = $("<tr>");
@@ -217,10 +239,16 @@
         clearTable();
     };
 
-    function clearTable(){
-        $.post("/emptyVars", function(){
+    function clearTable() {
+        $.post("/emptyVars", function () {
             console.log("Clearing...");
         });
+    };
+
+    function pickWinner(comments) {
+        var num = Math.floor(Math.random() * comments.length);
+        console.log(num + 1);
+        console.log(comments[num]);
     };
 
 </script>
