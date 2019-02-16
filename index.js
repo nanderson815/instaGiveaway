@@ -85,7 +85,7 @@ async function getComments(page) {
 
 
 
-// Stores the comments to the comments array by grabbing internal text.
+// Stores the comments to the comments array by grabbing internal text/comment link.
 async function printComments(page, comments) {
     const html = await page.content()
     await $('h3 > a', html).each(function () {

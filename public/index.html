@@ -85,6 +85,19 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+
+                <tbody id="Tablebody">
+                </tbody>
+            </table>
+        </div>
     </div>
 
 
@@ -106,7 +119,7 @@
 
     function checkStatus() {
         $.get("/send-comments", (data) => {
-            console.log("Comments loaded: ",data.comments.length);
+            console.log("Comments loaded: ", data.comments.length);
             getcomments(data);
         });
     }
@@ -121,7 +134,17 @@
         }
         else {
             console.log(loaded.comments);
+            appendComments(loaded.comments);
         }
+    };
+
+    function appendComments(data) {
+        for (let i in data) {
+            let row = $("<tr>");
+            row.append(`<td>${i}</td>`);
+            row.append(`<td>${data[i].username}</td>`);
+            $("#Tablebody").append(row);
+        };
     };
 
 </script>
