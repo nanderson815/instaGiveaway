@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 
 // Set Static Path
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public/')));
 
 // Function to grab URL from front end, run the scraping program.
 app.post('/submit-url', function (req, res) {
@@ -97,3 +97,10 @@ async function printComments(page, comments) {
     });
     console.log(comments.length);
 }
+
+// Empties the comment string
+app.post("/emptyVars", function emptyVars(){
+    exists = true;
+    comments = [];
+    console.log(exists, comments);
+});

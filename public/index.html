@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Instagram Giveaway Tool</title>
     <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -14,6 +16,7 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
 
 </head>
 
@@ -64,7 +67,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row" id="submitCard">
             <div class="col s12 m6">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
@@ -86,7 +89,7 @@
             </div>
         </div>
         <div class="row">
-            <table>
+            <table id="commentsTable" class="hidden">
                 <thead>
                     <tr>
                         <th>Number</th>
@@ -113,8 +116,15 @@
         $('.fixed-action-btn').floatingActionButton();
     });
 
-    $('#submitBtn').click(function () {
+    $('#submitBtn').click(function (event) {
+        event.preventDefault();
+        var URL = $("#URL").val().trim();
+        console.log(URL);
+        $.post("/submit-url", {url: URL}, function(data){
+            $("#URL").val("");
+        });
         checkStatus();
+        $("#submitCard").addClass("hidden");
     });
 
     function checkStatus() {
@@ -139,12 +149,21 @@
     };
 
     function appendComments(data) {
+        $("#commentsTable").removeClass("hidden");
         for (let i in data) {
+            num = parseInt(i) + 1;
             let row = $("<tr>");
-            row.append(`<td>${i}</td>`);
+            row.append(`<td>${num}</td>`);
             row.append(`<td>${data[i].username}</td>`);
             $("#Tablebody").append(row);
         };
+        clearTable();
+    };
+
+    function clearTable(){
+        $.post("/emptyVars", function(){
+            console.log("Clearing...");
+        });
     };
 
 </script>
