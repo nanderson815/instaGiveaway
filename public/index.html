@@ -90,6 +90,7 @@
         </div>
 
         <div class="row hidden center-align" id="loader">
+            <h5 id="loadedComments"></h5>
                 <div class="preloader-wrapper big active">
                     <div class="spinner-layer spinner-blue">
                         <div class="circle-clipper left">
@@ -184,7 +185,7 @@
 
     function checkStatus() {
         $.get("/send-comments", (data) => {
-            console.log("Comments loaded: ", data.comments.length);
+            $("#loadedComments").text(("Comments loaded: " + data.comments.length));
             getcomments(data);
         });
     }
