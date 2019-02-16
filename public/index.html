@@ -158,6 +158,19 @@
             </div>
         </div>
 
+        <div id="userCard" class="row hidden">
+            <div class="col s12 m6">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">And the winner is.....</span>
+                        <h5 id="winnerName" class="center-align"></h5>
+                        <div id=winnerAction class="card-action">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <table id="commentsTable" class="hidden">
                 <thead>
@@ -247,6 +260,10 @@
 
     function pickWinner(comments) {
         var num = Math.floor(Math.random() * comments.length);
+        $("#winnerCard").addClass("hidden");
+        $("#userCard").removeClass("hidden");
+        $("#winnerName").text(comments[num].username);
+        $("#winnerAction").append(`<a target="_blank" href='https://www.instagram.com${comments[num].link}'><h6 class='center-align'>View Profile</h6>`);
         console.log(num + 1);
         console.log(comments[num]);
     };
