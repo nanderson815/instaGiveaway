@@ -21,6 +21,8 @@ app.use(express.static(path.join(__dirname, '/public/')));
 
 // Function to grab URL from front end, run the scraping program.
 app.post('/submit-url', function (req, res) {
+    exists = true;
+    comments = [];
     var URL = req.body.url;
     console.log(URL);
     rungProg(URL);
