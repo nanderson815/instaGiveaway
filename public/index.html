@@ -65,7 +65,7 @@
                     <div class="card-action">
                         <form method="POST" action="/submit-url">
                             <label for="URL">URL</label>
-                            <input id="URL" type="text" name="url">
+                            <input id="URL" type="url" name="url" class="validate">
                             <button id="submitBtn" class="btn waves-effect waves-light" type="submit"
                                 name="action">Submit
                                 <i class="material-icons right">send</i>
@@ -217,6 +217,12 @@
         pickWinner(comments);
     });
 
+    function getImage() {
+        $.get("/send-image", (data) => {
+        console.log(data[0].link);
+        })
+    };
+
     function checkStatus() {
         $.get("/send-comments", (data) => {
             if (data.comments.length > 0) {
@@ -226,7 +232,6 @@
         });
     }
 
-
     function getcomments(loaded) {
         if (loaded.loading) {
             setTimeout(function () {
@@ -235,6 +240,7 @@
             }, 1000);
         }
         else {
+            getImage();
             comments = loaded.comments;
             appendComments(loaded.comments);
         }

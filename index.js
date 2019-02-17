@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, '/public/')));
 app.post('/submit-url', function (req, res) {
     exists = true;
     comments = [];
+    image = [];
     var URL = req.body.url;
     console.log(URL);
     rungProg(URL);
@@ -44,11 +45,16 @@ app.get('/send-comments', function (req, res) {
     res.send({ loading: exists, comments: comments });
 });
 
+app.get('/send-image', function(req, res){
+    res.send(image);
+})
+
 
 
 // Global vars :(
 var exists = true;
 var comments = [];
+var image = [];
 
 
 
@@ -58,13 +64,14 @@ async function rungProg(url) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
-
+    grabImage(page);
     while (exists === true) {
         console.log(exists);
         await getComments(page);
     }
     console.log(comments);
     console.log(comments.length);
+    console.log(image);
     await browser.close();
 };
 
@@ -98,11 +105,21 @@ async function printComments(page, comments) {
         comments.push(comment);
     });
     console.log(comments.length);
-}
+};
+
+// Stores image href for post
+async function grabImage(page){
+    const html = await page.content();
+    await $('.FFVAD', html).each( function(){
+        var link = $(this).attr('src');
+        image.push({link: link})
+    })
+};
 
 // Empties the comment string
 app.post("/emptyVars", function emptyVars(){
     exists = true;
     comments = [];
+    // image = [];
     console.log(exists, comments);
 });
