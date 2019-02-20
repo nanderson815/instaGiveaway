@@ -5,8 +5,10 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var app = express();
 
-app.listen(4000, function () {
-    console.log('Server Started on Port 4000...')
+var PORT = process.env.PORT || 3000;
+
+app.listen(PORT, function () {
+    console.log('Server Started on Port ', PORT);
 })
 
 // Middleware to parse the data from the front end form.

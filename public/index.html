@@ -24,7 +24,7 @@
     <nav style="margin-bottom: 20px">
         <div class="nav-wrapper teal lighten-1">
             <div class="container">
-                <a href="#!" class="brand-logo">Insta Picker</a>
+                <a id='brand-logo' class="brand-logo">InstaPicker</a>
             </div>
         </div>
     </nav>
@@ -204,6 +204,10 @@
     });
 
     var comments = [];
+
+    $('#brand-logo').click(function(){
+        location.reload();
+    });
 
     $('#submitBtn').click(function (event) {
         var form = $("#urlForm")[0];
