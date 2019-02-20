@@ -62,6 +62,7 @@ var image = [];
 
 
 
+
 // Funciton to scrape comments
 async function rungProg(url) {
     console.log('running');
