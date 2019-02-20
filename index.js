@@ -47,7 +47,7 @@ app.get('/send-comments', function (req, res) {
     res.send({ loading: exists, comments: comments });
 });
 
-app.get('/send-image', function(req, res){
+app.get('/send-image', function (req, res) {
     res.send(image);
 })
 
@@ -63,7 +63,7 @@ var image = [];
 // Funciton to scrape comments
 async function rungProg(url) {
     console.log('running');
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
     await page.goto(url);
     grabImage(page);
@@ -112,16 +112,16 @@ async function printComments(page, comments) {
 };
 
 // Stores image href for post
-async function grabImage(page){
+async function grabImage(page) {
     const html = await page.content();
-    await $('.FFVAD', html).each( function(){
+    await $('.FFVAD', html).each(function () {
         var link = $(this).attr('src');
-        image.push({link: link})
+        image.push({ link: link })
     })
 };
 
 // Empties the comment string
-app.post("/emptyVars", function(req, res){
+app.post("/emptyVars", function (req, res) {
     res.sendStatus(200);
     exists = true;
     comments = [];
