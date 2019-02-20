@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var app = express();
 
 app.listen(4000, function () {
-    console.log('Server Started on Port 3000...')
+    console.log('Server Started on Port 4000...')
 })
 
 // Middleware to parse the data from the front end form.
@@ -25,7 +25,7 @@ app.post('/submit-url', function (req, res) {
     comments = [];
     image = [];
     var URL = req.body.url;
-    console.log(URL);
+    res.sendStatus(200);
     rungProg(URL);
 });
 
@@ -89,6 +89,8 @@ async function getComments(page) {
     } else {
         exists = false;
         console.log('not found');
+        comments = [];
+        await printComments(page, comments);
     }
 };
 
@@ -117,7 +119,8 @@ async function grabImage(page){
 };
 
 // Empties the comment string
-app.post("/emptyVars", function emptyVars(){
+app.post("/emptyVars", function(req, res){
+    res.sendStatus(200);
     exists = true;
     comments = [];
     // image = [];

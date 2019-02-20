@@ -134,9 +134,13 @@
             </div>
         </div>
 
+
         <div id="winnerCard" class="row hidden">
             <div class="col s12 m6 offset-m3">
                 <div class="card">
+                    <div class="card-image">
+                        <img id="postImage">
+                    </div>
                     <div class="card-content">
                         <span class="card-title">Pick a winner!</span>
                         <p>Clicking the button below will randomly select a winner from the comments.</p>
@@ -156,6 +160,7 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title">And the winner is.....</span>
+                        <h6 id="winnerNumber" class="center-align"></h6>
                         <h5 id="winnerName" class="center-align"></h5>
                         <div id=winnerAction class="card-action">
                         </div>
@@ -222,6 +227,7 @@
     function getImage() {
         $.get("/send-image", (data) => {
             console.log(data[0].link);
+            appendImage(data[0].link);
         })
     };
 
@@ -258,19 +264,24 @@
             row.append(`<td>${data[i].username}</td>`);
             $("#Tablebody").append(row);
         };
-        clearTable();
+        // clearTable();
     };
 
-    function clearTable() {
-        console.log("Clearing...");
-        $.post("/emptyVars", function () {
-        });
+    function appendImage(data) {
+        $("#postImage").attr("src", data);
     };
+
+    // function clearTable() {
+    //     console.log("Clearing...");
+    //     $.post("/emptyVars", function () {
+    //     });
+    // };
 
     function pickWinner(comments) {
         var num = Math.floor(Math.random() * comments.length);
         $("#winnerCard").addClass("hidden");
         $("#userCard").removeClass("hidden");
+        $("#winnerNumber").text("Comment Number: " + (num + 1));
         $("#winnerName").text(comments[num].username);
         $("#winnerAction").append(`<a target="_blank" href='https://www.instagram.com${comments[num].link}'><p class="center-align"><button class="btn waves-effect waves-light">View Profile</button></p>`);
         console.log(num + 1);
