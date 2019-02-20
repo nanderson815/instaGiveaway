@@ -205,7 +205,6 @@
         if (form.checkValidity()) {
             event.preventDefault();
             var URL = $("#URL").val().trim();
-            console.log(URL);
             $.post("/submit-url", { url: URL }, function (data) {
                 $("#URL").val("");
             });
@@ -239,7 +238,6 @@
         if (loaded.loading) {
             setTimeout(function () {
                 checkStatus();
-                console.log("loading");
             }, 1000);
         }
         else {
@@ -264,8 +262,8 @@
     };
 
     function clearTable() {
+        console.log("Clearing...");
         $.post("/emptyVars", function () {
-            console.log("Clearing...");
         });
     };
 
