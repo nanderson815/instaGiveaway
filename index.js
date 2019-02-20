@@ -65,7 +65,7 @@ var image = [];
 // Funciton to scrape comments
 async function rungProg(url) {
     console.log('running');
-    const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(url);
     grabImage(page);
