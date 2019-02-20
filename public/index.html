@@ -63,11 +63,10 @@
                             access the comments!</p>
                     </div>
                     <div class="card-action">
-                        <form method="POST" action="/submit-url">
+                        <form id="urlForm">
                             <label for="URL">URL</label>
-                            <input id="URL" type="url" name="url" class="validate">
-                            <button id="submitBtn" class="btn waves-effect waves-light" type="submit"
-                                name="action">Submit
+                            <input id="URL" type="url" name="url" class="validate" required="" aria-required="true">
+                            <button id="submitBtn" class="btn waves-effect waves-light" type="submit">Submit
                                 <i class="material-icons right">send</i>
                             </button>
                         </form>
@@ -202,15 +201,19 @@
     var comments = [];
 
     $('#submitBtn').click(function (event) {
-        event.preventDefault();
-        var URL = $("#URL").val().trim();
-        console.log(URL);
-        $.post("/submit-url", { url: URL }, function (data) {
-            $("#URL").val("");
-        });
-        checkStatus();
-        $("#submitCard").addClass("hidden");
-        $("#loader").removeClass("hidden");
+        var form = $("#urlForm")[0];
+        if (form.checkValidity()) {
+            event.preventDefault();
+            var URL = $("#URL").val().trim();
+            console.log(URL);
+            $.post("/submit-url", { url: URL }, function (data) {
+                $("#URL").val("");
+            });
+            checkStatus();
+            $("#submitCard").addClass("hidden");
+            $("#loader").removeClass("hidden");
+        };
+
     });
 
     $("#winnerbtn").click(function () {
@@ -219,7 +222,7 @@
 
     function getImage() {
         $.get("/send-image", (data) => {
-        console.log(data[0].link);
+            console.log(data[0].link);
         })
     };
 
