@@ -1,2 +1,2 @@
-runtime: nodejs11
+runtime: nodejs
 instance_class: F4_1G
