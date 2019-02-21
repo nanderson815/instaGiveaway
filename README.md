@@ -1,5 +1,5 @@
 # InstaPicker
-## Pick a winner from the comments of an Instagram giveaway
+## Pick a winner from the comments of an Instagram giveaway post
 
 Live app can be found here: http://instapicker.appspot.com/
 
