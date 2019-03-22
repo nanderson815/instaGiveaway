@@ -15,7 +15,10 @@ app.listen(PORT, function () {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
+// Global vars :(
+var exists = true;
+var comments = [];
+var image = [];
 
 //-------------------------------------------------------------------------------------------------
 
@@ -55,10 +58,7 @@ app.get('/send-image', function (req, res) {
 
 
 
-// Global vars :(
-var exists = true;
-var comments = [];
-var image = [];
+
 
 
 // Funciton to scrape comments
@@ -90,19 +90,19 @@ async function getComments(page) {
         var wait = Math.floor(Math.random() * 1000) + 250;
         await page.waitFor(wait);
         comments = [];
-        await printComments(page, comments);
+        await printComments(page);
     } else {
         exists = false;
         console.log('not found');
         comments = [];
-        await printComments(page, comments);
+        await printComments(page);
     }
 };
 
 
 
 // Stores the comments to the comments array by grabbing internal text/comment link.
-async function printComments(page, comments) {
+async function printComments(page) {
     const html = await page.content()
     await $('h3 > a', html).each(function () {
         comment = {

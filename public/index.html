@@ -250,10 +250,12 @@
                 checkStatus();
             }, 1000);
         }
-        else {
+        else if (loaded.comments.length > 0){
             getImage();
             comments = loaded.comments;
             appendComments(loaded.comments);
+        } else {
+            checkStatus();
         }
     };
 
